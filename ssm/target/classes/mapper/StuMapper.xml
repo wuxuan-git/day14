@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.StuMapper">
+	<select id="findPage" parameterType="stuVo" resultType="stuVo">
+	SELECT s.*,m.m_name AS dname FROM stu_tb s,major_tb m 
+	<where>
+	s.m_id=m.m_id
+	<if test="time1!=null">
+	and s.s_birth &gt;= #{time1}
+	</if>
+	<if test="time2!=null">
+	and s.s_birth &lt;= #{time2}
+	</if>
+	</where>  
+	</select>
+
+</mapper>

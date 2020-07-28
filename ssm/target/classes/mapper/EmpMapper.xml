@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiaoshu.dao.EmpMapper">
+		<select id="findPage" resultType="empVo" parameterType="empVo">
+		SELECT e.*,d.company_name AS dname FROM p_emp e,p_dept d
+		<where>
+		e.company_id=d.company_id
+		<if test="pName!=null and pName!=''">
+		and e.p_name like '%${pName}%'
+		</if>
+		<if test="companyId!=null and companyId!=0">
+		and e.company_id =#{companyId}
+		</if>
+		<if test="time1!=null">
+		and e.createtime &gt;= #{time1}
+		</if>
+		<if test="time2!=null">
+		and e.createtime &lt;= #{time2}
+		</if>
+		
+		
+		</where> 
+		</select>
+		
+		<select id="findAll" resultType="empVo">
+		SELECT e.*,d.company_name AS dname FROM p_emp e,p_dept d
+		where e.company_id=d.company_id
+		</select>
+		<select id="findCount" resultType="empVo">
+		SELECT d.company_name AS dname,COUNT(id) AS num FROM 
+		p_dept d LEFT JOIN p_emp e ON 
+		d.company_id=e.id GROUP BY d.company_id
+		</select>
+	<select id="getid" parameterType="string" resultType="dept">
+	select * from p_dept where company_name = #{value}
+	</select>
+
+</mapper>
